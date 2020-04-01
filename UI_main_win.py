@@ -121,8 +121,10 @@ class Ui_MainWindow(object):
         global path_openfile_name
 
         # 获取路径====================================================================
-
-        path_openfile_name = openfile_name[0]
+        if len(path_openfile_name) > 0:
+            path_openfile_name = openfile_name[0]
+        else:
+            path_openfile_name = 'basic_info.xlsx'
 
         _translate = QtCore.QCoreApplication.translate
         self.dir_data_1.setText(_translate("MainWindow", path_openfile_name))

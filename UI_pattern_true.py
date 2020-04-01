@@ -340,6 +340,7 @@ class Ui_MainWindow_pattern_true(object):
 
         # print(list(map(lambda x:np.array(x).astype(int), Mfarm_Partition[result[time_horizen]])))
         self.m.update_figure(points, result_i, map_img)
+
 class MyWindow(QMainWindow, Ui_MainWindow_pattern_true):
     def __init__(self, parent=None):
         super(MyWindow, self).__init__(parent)
