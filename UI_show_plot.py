@@ -186,15 +186,15 @@ class Ui_MainWindow_show_plot(object):
         self.statusbar.setObjectName("statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.m = PlotCanvas(self, width=5, height=4)  # 实例化一个画布对象
-        self.m.move(300, 160)
+        self.m = PlotCanvas(self, width=5, height=4.05)  # 实例化一个画布对象
+        self.m.move(300, 145)
 
         self.comboBox_station.currentIndexChanged[str].connect(
             self.get_station_name)  # 条目发生改变，发射信号，传递条目内容
         self.comboBox_datatype.currentIndexChanged[str].connect(
             self.get_data_name)  # 条目发生改变，发射信号，传递条目内容
 
-        self.pushButton.clicked.connect(self.print_)
+        # self.pushButton.clicked.connect(self.print_)
         self.pushButton.clicked.connect(self.load_data)
         self.pushButton.clicked.connect(self.plot_)
 
@@ -293,7 +293,7 @@ class Ui_MainWindow_show_plot(object):
             # 导入光伏数据
             if station_[:2] == "光伏":
                 # TODO
-                openfile_name_ = '/Users/mayuan/Downloads/projects/data_jilin/data/Power/'
+                openfile_name_ = 'Power/'
                 input_data = pd.read_csv(
                     openfile_name_ +
                     '/' +
@@ -308,7 +308,7 @@ class Ui_MainWindow_show_plot(object):
                 df_wind_power = pd.DataFrame(Power['Power'])
                 df_wind_power.index = pd.date_range(start='2017-01-01', periods=len(df_wind_power[0]), freq='15min')
                 input_data = df_wind_power.iloc[:,int(station_[2:]-1)]
-                
+
         elif data_[:3] == "NWP":
             # 导入NWP
             if station_[:2] == "光伏":
@@ -334,7 +334,7 @@ class Ui_MainWindow_show_plot(object):
                         521: 'CN0688'}
                 # TODO
                 # change openfile
-                path_openfile_name = '/Users/mayuan/Downloads/projects/data_jilin/data/NWP/'
+                path_openfile_name = 'NWP/'
                 input_data = pd.read_csv(path_openfile_name +
                                          dict[int(station_[2:])] +
                                          '.csv', index_col=2, parse_dates=True)
@@ -367,7 +367,7 @@ class Ui_MainWindow_show_plot(object):
                         20: 'CN0137'}
                 # TODO
                 # change openfile
-                path_openfile_name = '/Users/mayuan/Downloads/projects/data_jilin/data/NWP/'
+                path_openfile_name = 'NWP/'
                 input_data = pd.read_csv(path_openfile_name +
                                          dict[int(station_[2:])] +
                                          '.csv', index_col=2, parse_dates=True)
@@ -397,8 +397,8 @@ class Ui_MainWindow_show_plot(object):
     def plot_(self):
 
         import datetime
-        start_time = self.dateTimeEdit_2.text()
-        end_time = self.dateTimeEdit.text()
+        start_time = self.dateTimeEdit_start.text()
+        end_time = self.dateTimeEdit_end.text()
         print(input_data[:10])
         self.m.update_figure(
             input_data,
@@ -407,3 +407,19 @@ class Ui_MainWindow_show_plot(object):
         # time1 = pd.Timestamp(datetime.datetime(2017,1,2,0,0,00))
         # time2 = pd.Timestamp(datetime.datetime(2017,1,3,0,0,00))
         # self.m.update_figure(input_data, time1, time2)
+
+class MyWindow_show_plot(QMainWindow, Ui_MainWindow_show_plot):
+    def __init__(self, parent=None):
+        super(MyWindow_show_plot, self).__init__(parent)
+        self.setupUi(self)
+
+import sys
+if __name__ == '__main__':
+    # 字体随分辨率自适应
+    QtCore.QCoreApplication.setAttribute(QtCore.Qt.AA_EnableHighDpiScaling)
+
+    app = QApplication(sys.argv)
+    myWin = MyWindow_show_plot()
+    myWin.show()
+
+    sys.exit(app.exec_())

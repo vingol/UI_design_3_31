@@ -114,25 +114,30 @@ class Ui_MainWindow(object):
 
         # 获取路径===================================================================
 
-        openfile_name = QFileDialog.getOpenFileName(
-            self, '选择文件', '', 'Excel files(*.xlsx , *.xls)')
-
-        # print(openfile_name)
+        # openfile_name = QFileDialog.getOpenFileName(
+        #     self, '选择文件', '', 'Excel files(*.xlsx , *.xls)')
+        #
+        # # print(openfile_name)
         global path_openfile_name
 
         # 获取路径====================================================================
-        if len(path_openfile_name) > 0:
-            path_openfile_name = openfile_name[0]
-        else:
-            path_openfile_name = 'basic_info.xlsx'
+        # if len(path_openfile_name) > 0:
+        #     path_openfile_name = openfile_name[0]
+        # else:
+        path_openfile_name = 'basic_info.xlsx'
 
         _translate = QtCore.QCoreApplication.translate
         self.dir_data_1.setText(_translate("MainWindow", path_openfile_name))
 
+
     def creat_table_show(self):
         # ===========读取表格，转换表格，===========================================
+        # TODO
+        # 修改表格具体信息
         if len(path_openfile_name) > 0:
-            input_table = pd.read_excel(path_openfile_name)
+            print('get def creat')
+            input_table = pd.read_excel(path_openfile_name, sheet_name='solar')
+            print('readtablesucess')
         # print(input_table)
             input_table_rows = input_table.shape[0]
             input_table_colunms = input_table.shape[1]

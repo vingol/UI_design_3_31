@@ -277,13 +277,13 @@ class Ui_MainWindow_pattern_true(object):
     def load_wind_data(self):
         global df_wind_power, cappseries
 
-        Power = scio.loadmat("wind_power_jilin.mat")
+        Power = scio.loadmat("extra_data/wind_power_jilin.mat")
         df_wind_power = pd.DataFrame(Power['Power'])
         df_wind_power.index = pd.date_range(start='2017-01-01', periods=len(df_wind_power[0]), freq='15min')
 
         print(df_wind_power.shape)
 
-        capp = scio.loadmat("wind_power_cap.mat")
+        capp = scio.loadmat("extra_data/wind_power_cap.mat")
         cappseries = matlab.double(capp['capp'].tolist())
 
     def show_wind_pattern(self):
@@ -325,7 +325,7 @@ class Ui_MainWindow_pattern_true(object):
         result = (np.array(Better_code).reshape(-1) - 1).astype(int)
         time_horizen = 1
 
-        f = open('points.txt', 'rb')
+        f = open('extra_data/points.txt', 'rb')
         points = pickle.load(f)
         f.close()
 
@@ -340,15 +340,3 @@ class Ui_MainWindow_pattern_true(object):
 
         # print(list(map(lambda x:np.array(x).astype(int), Mfarm_Partition[result[time_horizen]])))
         self.m.update_figure(points, result_i, map_img)
-
-class MyWindow(QMainWindow, Ui_MainWindow_pattern_true):
-    def __init__(self, parent=None):
-        super(MyWindow, self).__init__(parent)
-        self.setupUi(self)
-
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    myWin = MyWindow()
-    myWin.show()
-
-    sys.exit(app.exec_())

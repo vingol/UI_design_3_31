@@ -2,11 +2,12 @@
 
 block_cipher = None
 
+SETUP_DIR = 'C:\\Users\\Camille\\Desktop\\UI_design_test_2\\'
 
 a = Analysis(['main.py'],
-             pathex=['C:\\Program Files\\Python37\\Lib\\site-packages\\matlab', 'C:\\Users\\Camille\\PycharmProjects\\UI_design_test_2'],
+             pathex=['C:\\Program Files\\Python37\\Lib\\site-packages\\matlab', 'C:\\Users\\Camille\\Desktop\\UI_design_test_2'],
              binaries=[],
-             datas=[],
+             datas=[(SETUP_DIR+'extra_data','extra_data'),(SETUP_DIR+'images','images'),(SETUP_DIR+'Power','Power'),(SETUP_DIR+'NWP','NWP')],
              hiddenimports=['mlarray'],
              hookspath=[],
              runtime_hooks=[],
